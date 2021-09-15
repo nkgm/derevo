@@ -39,29 +39,34 @@ lazy val derevo = project
   .in(file("."))
   .settings(noPublishSettings)
   .aggregate(
-    cats,
-    catsTagless,
-    circe,
-    circeMagnolia,
-    ciris,
-    core,
-    pureconfig,
-    reactivemongo,
-    scalacheck,
-    tethys,
-    tethysMagnolia,
-    tests,
+    cats.jvm,
+    cats.js,
+    // catsTagless,
+    // circe,
+    // circeMagnolia,
+    // ciris,
+    // core,
+    // pureconfig,
+    // reactivemongo,
+    // scalacheck,
+    // tethys,
+    // tethysMagnolia,
+    // tests,
   )
 
 lazy val core =
-  (project in file("modules/core"))
+  crossProject(JSPlatform, JVMPlatform)
+  .crossType(CrossType.Pure)
+    .in(file("modules/core"))
     .settings(publishSettings)
     .settings(
       name := "derevo-core"
     )
 
 lazy val cats =
-  (project in file("modules/cats"))
+  crossProject(JSPlatform, JVMPlatform)
+  .crossType(CrossType.Pure)
+    .in(file("modules/cats"))
     .settings(publishSettings)
     .settings(
       name := "derevo-cats",
@@ -69,92 +74,92 @@ lazy val cats =
     )
     .dependsOn(core)
 
-lazy val catsTagless =
-  (project in file("modules/catsTagless"))
-    .settings(publishSettings)
-    .settings(
-      name := "derevo-cats-tagless",
-      libraryDependencies ++= Seq(Dependencies.catsTaglessCore, Dependencies.catsTaglessMacros),
-    )
-    .dependsOn(core)
-
-lazy val circe =
-  (project in file("modules/circe"))
-    .settings(publishSettings)
-    .settings(
-      name := "derevo-circe",
-      libraryDependencies ++= Seq(Dependencies.circeCore, Dependencies.circeDerivation),
-      libraryDependencies ++= Seq(Dependencies.circeParser).map(_ % Test)
-    )
-    .dependsOn(core)
-
-lazy val circeMagnolia =
-  (project in file("modules/circeMagnolia"))
-    .settings(publishSettings)
-    .settings(
-      name := "derevo-circe-magnolia",
-      libraryDependencies ++= Seq(Dependencies.circeMagnolia),
-      libraryDependencies ++= Seq(Dependencies.circeParser).map(_ % Test)
-    )
-    .dependsOn(core)
-
-lazy val ciris =
-  (project in file("modules/ciris"))
-    .settings(publishSettings)
-    .settings(
-      name := "derevo-ciris",
-      libraryDependencies ++= Seq(Dependencies.ciris, Dependencies.typesafeConfig, Dependencies.magnolia),
-    )
-    .dependsOn(core)
-
-lazy val pureconfig =
-  (project in file("modules/pureconfig"))
-    .settings(publishSettings)
-    .settings(
-      name := "derevo-pureconfig",
-      libraryDependencies ++= Seq(Dependencies.pureconfig, Dependencies.pureconfigMagnolia),
-    )
-    .dependsOn(core)
-
-lazy val reactivemongo =
-  (project in file("modules/reactivemongo"))
-    .settings(publishSettings)
-    .settings(
-      name := "derevo-reactivemongo",
-      libraryDependencies ++= Seq(Dependencies.reactivemongoBsonMacros),
-    )
-    .dependsOn(core)
-
-lazy val tethys =
-  (project in file("modules/tethys"))
-    .settings(publishSettings)
-    .settings(
-      name := "derevo-tethys",
-      libraryDependencies ++= Seq(Dependencies.tethysCore, Dependencies.tethysDerivation),
-      libraryDependencies ++= Seq(Dependencies.tethysJackson).map(_ % Test)
-    )
-    .dependsOn(core)
-
-lazy val tethysMagnolia =
-  (project in file("modules/tethysMagnolia"))
-    .settings(publishSettings)
-    .settings(
-      name := "derevo-tethys-magnolia",
-      libraryDependencies ++= Seq(Dependencies.tethysCore, Dependencies.magnolia),
-      libraryDependencies ++= Seq(Dependencies.tethysJackson).map(_ % Test)
-    )
-    .dependsOn(core)
-
-lazy val scalacheck =
-  (project in file("modules/scalacheck"))
-    .settings(publishSettings)
-    .settings(
-      name := "derevo-scalacheck",
-      libraryDependencies ++= Seq(Dependencies.scalacheck, Dependencies.magnolia),
-    )
-    .dependsOn(core)
-
-lazy val tests =
-  (project in file("modules/tests"))
-    .settings(noPublishSettings)
-    .dependsOn(core, circe, ciris, tethys, reactivemongo, catsTagless, pureconfig)
+// lazy val catsTagless =
+//   (project in file("modules/catsTagless"))
+//     .settings(publishSettings)
+//     .settings(
+//       name := "derevo-cats-tagless",
+//       libraryDependencies ++= Seq(Dependencies.catsTaglessCore, Dependencies.catsTaglessMacros),
+//     )
+//     .dependsOn(core)
+//
+// lazy val circe =
+//   (project in file("modules/circe"))
+//     .settings(publishSettings)
+//     .settings(
+//       name := "derevo-circe",
+//       libraryDependencies ++= Seq(Dependencies.circeCore, Dependencies.circeDerivation),
+//       libraryDependencies ++= Seq(Dependencies.circeParser).map(_ % Test)
+//     )
+//     .dependsOn(core)
+//
+// lazy val circeMagnolia =
+//   (project in file("modules/circeMagnolia"))
+//     .settings(publishSettings)
+//     .settings(
+//       name := "derevo-circe-magnolia",
+//       libraryDependencies ++= Seq(Dependencies.circeMagnolia),
+//       libraryDependencies ++= Seq(Dependencies.circeParser).map(_ % Test)
+//     )
+//     .dependsOn(core)
+//
+// lazy val ciris =
+//   (project in file("modules/ciris"))
+//     .settings(publishSettings)
+//     .settings(
+//       name := "derevo-ciris",
+//       libraryDependencies ++= Seq(Dependencies.ciris, Dependencies.typesafeConfig, Dependencies.magnolia),
+//     )
+//     .dependsOn(core)
+//
+// lazy val pureconfig =
+//   (project in file("modules/pureconfig"))
+//     .settings(publishSettings)
+//     .settings(
+//       name := "derevo-pureconfig",
+//       libraryDependencies ++= Seq(Dependencies.pureconfig, Dependencies.pureconfigMagnolia),
+//     )
+//     .dependsOn(core)
+//
+// lazy val reactivemongo =
+//   (project in file("modules/reactivemongo"))
+//     .settings(publishSettings)
+//     .settings(
+//       name := "derevo-reactivemongo",
+//       libraryDependencies ++= Seq(Dependencies.reactivemongoBsonMacros),
+//     )
+//     .dependsOn(core)
+//
+// lazy val tethys =
+//   (project in file("modules/tethys"))
+//     .settings(publishSettings)
+//     .settings(
+//       name := "derevo-tethys",
+//       libraryDependencies ++= Seq(Dependencies.tethysCore, Dependencies.tethysDerivation),
+//       libraryDependencies ++= Seq(Dependencies.tethysJackson).map(_ % Test)
+//     )
+//     .dependsOn(core)
+//
+// lazy val tethysMagnolia =
+//   (project in file("modules/tethysMagnolia"))
+//     .settings(publishSettings)
+//     .settings(
+//       name := "derevo-tethys-magnolia",
+//       libraryDependencies ++= Seq(Dependencies.tethysCore, Dependencies.magnolia),
+//       libraryDependencies ++= Seq(Dependencies.tethysJackson).map(_ % Test)
+//     )
+//     .dependsOn(core)
+//
+// lazy val scalacheck =
+//   (project in file("modules/scalacheck"))
+//     .settings(publishSettings)
+//     .settings(
+//       name := "derevo-scalacheck",
+//       libraryDependencies ++= Seq(Dependencies.scalacheck, Dependencies.magnolia),
+//     )
+//     .dependsOn(core)
+//
+// lazy val tests =
+//   (project in file("modules/tests"))
+//     .settings(noPublishSettings)
+//     .dependsOn(core, circe, ciris, tethys, reactivemongo, catsTagless, pureconfig)
