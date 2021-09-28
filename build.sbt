@@ -71,7 +71,12 @@ lazy val cats =
     .settings(publishSettings)
     .settings(
       name := "derevo-cats",
-      libraryDependencies ++= Seq(Dependencies.magnolia, Dependencies.catsCore),
+      libraryDependencies ++= Seq(
+        // Dependencies.magnolia, 
+        // Dependencies.catsCore
+        "com.propensive" %%% "magnolia"  % Dependencies.Version.magnolia,
+        "org.typelevel"  %%% "cats-core" % Dependencies.Version.cats
+        ),
     )
     .dependsOn(core)
 

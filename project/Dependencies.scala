@@ -1,4 +1,7 @@
 import sbt._
+// import org.scalajs.sbtplugin.ScalaJSCrossVersion
+// import org.scalajs.sbtplugin.ScalaJSPlugin.autoImport._
+import org.portablescala.sbtplatformdeps.PlatformDepsPlugin.autoImport._
 
 object Dependencies {
   object Version {
