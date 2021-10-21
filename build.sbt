@@ -41,10 +41,11 @@ lazy val derevo = project
   .aggregate(
     cats.jvm,
     cats.js,
-    // catsTagless,
+    catsTagless.jvm,
+    catsTagless.js,
     // circe,
     // circeMagnolia,
-    // ciris,
+    ciris,
     core.jvm,
     core.js,
     // pureconfig,
@@ -80,14 +81,16 @@ lazy val cats =
     )
     .dependsOn(core)
 
-// lazy val catsTagless =
-//   (project in file("modules/catsTagless"))
-//     .settings(publishSettings)
-//     .settings(
-//       name := "derevo-cats-tagless",
-//       libraryDependencies ++= Seq(Dependencies.catsTaglessCore, Dependencies.catsTaglessMacros),
-//     )
-//     .dependsOn(core)
+lazy val catsTagless =
+  crossProject(JSPlatform, JVMPlatform)
+  .crossType(CrossType.Pure)
+  .in(file("modules/catsTagless"))
+    .settings(publishSettings)
+    .settings(
+      name := "derevo-cats-tagless",
+      libraryDependencies ++= Seq(Dependencies.catsTaglessCore, Dependencies.catsTaglessMacros),
+    )
+    .dependsOn(core)
 //
 // lazy val circe =
 //   (project in file("modules/circe"))
@@ -109,14 +112,14 @@ lazy val cats =
 //     )
 //     .dependsOn(core)
 //
-// lazy val ciris =
-//   (project in file("modules/ciris"))
-//     .settings(publishSettings)
-//     .settings(
-//       name := "derevo-ciris",
-//       libraryDependencies ++= Seq(Dependencies.ciris, Dependencies.typesafeConfig, Dependencies.magnolia),
-//     )
-//     .dependsOn(core)
+lazy val ciris =
+  (project in file("modules/ciris"))
+    .settings(publishSettings)
+    .settings(
+      name := "derevo-ciris",
+      libraryDependencies ++= Seq(Dependencies.ciris, Dependencies.typesafeConfig, Dependencies.magnolia),
+    )
+    .dependsOn(core.jvm)
 //
 // lazy val pureconfig =
 //   (project in file("modules/pureconfig"))
