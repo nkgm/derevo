@@ -1,0 +1,11 @@
+data {
+  name = Demo
+  list = [1, 2, 3]
+  map.wtf = 1
+  map.lol = 2
+  map.wut = 3
+  rate {
+    elements = 2
+    duration = 100 millis
+  }
+}

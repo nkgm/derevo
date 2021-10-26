@@ -44,6 +44,7 @@ lazy val derevo = project
     circe,
     circeMagnolia,
     ciris,
+    ciris2,
     core,
     pureconfig,
     reactivemongo,
@@ -104,6 +105,15 @@ lazy val ciris =
     .settings(
       name := "derevo-ciris",
       libraryDependencies ++= Seq(Dependencies.ciris, Dependencies.typesafeConfig, Dependencies.magnolia),
+    )
+    .dependsOn(core)
+
+lazy val ciris2 =
+  (project in file("modules/ciris2"))
+    .settings(publishSettings)
+    .settings(
+      name := "derevo-ciris2",
+      libraryDependencies ++= Seq(Dependencies.ciris2, Dependencies.typesafeConfig, Dependencies.magnolia, Dependencies.catsEffect),
     )
     .dependsOn(core)
 
