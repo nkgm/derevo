@@ -224,7 +224,7 @@ object SealedTrait {
 }
 ```
 
-### [Ciris](https://github.com/vlovgr/ciris) + `HOCON`
+### [Ciris 1.x](https://github.com/vlovgr/ciris) + `HOCON`
 ```sbt
 libraryDependencies += "tf.tofu" %% "derevo-ciris" % "latest version in badge"
 ```
@@ -262,6 +262,49 @@ import scala.concurrent.ExecutionContext.global
 implicit val cs = IO.contextShift(global)
 
 assert(source.load[IO].unsafeRunSync() == DataConfig("AAA", List("pub", "home", "work"), Map("until" -> 1, "from" -> 2, "to" -> 3)))
+```
+
+### [Ciris 2.x](https://github.com/vlovgr/ciris) + `HOCON`
+```sbt
+libraryDependencies += "tf.tofu" %% "derevo-ciris2" % "latest version in badge"
+```
+
+```scala
+import derevo.derive
+import derevo.ciris.cirisDecoder
+import ciris.hocon._
+import ciris.hocon.instances._
+
+import com.typesafe.config.ConfigFactory
+import cats.effect._
+import cats.effect.unsafe.implicits._
+import java.nio.file.Paths
+
+@derive(cirisDecoder)
+case class DataConfig(name: String, addresses: List[String], mapping: Map[String, Int])
+
+val cfg = ConfigFactory.parseString(
+  """
+    |data {
+    |  name = AAA
+    |  addresses = [home, work, pub]
+    |  mapping.until = 1
+    |  mapping.from  = 2
+    |  mapping.to    = 3
+    |}
+      """.stripMargin
+)
+
+val hoconSource = hocon(cfg) _
+
+// OR
+
+val hoconFileSource = hocon(Paths.get("path", "to", "file")) _
+
+val dataConfig = hoconSource("data").as[DataConfig].load[IO].unsafeRunSync()
+
+println(dataConfig)
+// DataConfig(AAA,List(home, work, pub),Map(until -> 1, from -> 1, to -> 2))
 ```
 
 ### [PureConfig](https://github.com/pureconfig/pureconfig)

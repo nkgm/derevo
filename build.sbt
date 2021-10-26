@@ -46,8 +46,9 @@ lazy val derevo = project
     // circe,
     // circeMagnolia,
     ciris,
+    ciris2,
     core.jvm,
-    core.js,
+    core.js
     // pureconfig,
     // reactivemongo,
     // scalacheck,
@@ -120,6 +121,15 @@ lazy val ciris =
       libraryDependencies ++= Seq(Dependencies.ciris, Dependencies.typesafeConfig, Dependencies.magnolia),
     )
     .dependsOn(core.jvm)
+
+lazy val ciris2 =
+  (project in file("modules/ciris2"))
+    .settings(publishSettings)
+    .settings(
+      name := "derevo-ciris2",
+      libraryDependencies ++= Seq(Dependencies.ciris2, Dependencies.typesafeConfig, Dependencies.magnolia, Dependencies.catsEffect),
+    )
+    .dependsOn(core.jvm)
 //
 // lazy val pureconfig =
 //   (project in file("modules/pureconfig"))
@@ -172,3 +182,4 @@ lazy val ciris =
 //   (project in file("modules/tests"))
 //     .settings(noPublishSettings)
 //     .dependsOn(core, circe, ciris, tethys, reactivemongo, catsTagless, pureconfig)
+

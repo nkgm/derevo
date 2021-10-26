@@ -15,6 +15,8 @@ object Dependencies {
 
     val cats = "2.6.1"
 
+    val catsEffect = "3.2.8"
+
     val circe = "0.14.1"
 
     val circeMagnolia = "0.7.0"
@@ -28,6 +30,8 @@ object Dependencies {
     val typesafeConfig = "1.4.1"
 
     val ciris = "1.2.1"
+
+    val ciris2 = "2.2.0"
 
     val reactivemongo = "0.20.13"
 
@@ -53,6 +57,8 @@ object Dependencies {
   lazy val circeMagnolia           = "io.circe"              %% "circe-magnolia-derivation" % Version.circeMagnolia
   lazy val typesafeConfig          = "com.typesafe"           % "config"                    % Version.typesafeConfig
   lazy val ciris                   = "is.cir"                %% "ciris"                     % Version.ciris
+  lazy val ciris2                  = "is.cir"                %% "ciris"                     % Version.ciris2
+  lazy val catsEffect              = "org.typelevel"         %% "cats-effect"               % Version.catsEffect % Test
   lazy val pureconfig              = "com.github.pureconfig" %% "pureconfig"                % Version.pureConfig
   lazy val pureconfigMagnolia      = "com.github.pureconfig" %% "pureconfig-magnolia"       % Version.pureConfig
   lazy val reactivemongoBsonMacros = "org.reactivemongo"     %% "reactivemongo-bson-macros" % Version.reactivemongo
