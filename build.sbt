@@ -43,8 +43,10 @@ lazy val derevo = project
     cats.js,
     catsTagless.jvm,
     catsTagless.js,
-    // circe,
-    // circeMagnolia,
+    circe.jvm,
+    circe.js,
+    circeMagnolia.jvm,
+    circeMagnolia.js,
     ciris,
     ciris2,
     core.jvm,
@@ -92,27 +94,31 @@ lazy val catsTagless =
       libraryDependencies ++= Seq(Dependencies.catsTaglessCore, Dependencies.catsTaglessMacros),
     )
     .dependsOn(core)
-//
-// lazy val circe =
-//   (project in file("modules/circe"))
-//     .settings(publishSettings)
-//     .settings(
-//       name := "derevo-circe",
-//       libraryDependencies ++= Seq(Dependencies.circeCore, Dependencies.circeDerivation),
-//       libraryDependencies ++= Seq(Dependencies.circeParser).map(_ % Test)
-//     )
-//     .dependsOn(core)
-//
-// lazy val circeMagnolia =
-//   (project in file("modules/circeMagnolia"))
-//     .settings(publishSettings)
-//     .settings(
-//       name := "derevo-circe-magnolia",
-//       libraryDependencies ++= Seq(Dependencies.circeMagnolia),
-//       libraryDependencies ++= Seq(Dependencies.circeParser).map(_ % Test)
-//     )
-//     .dependsOn(core)
-//
+
+lazy val circe =
+  crossProject(JSPlatform, JVMPlatform)
+  .crossType(CrossType.Pure)
+  .in(file("modules/circe"))
+    .settings(publishSettings)
+    .settings(
+      name := "derevo-circe",
+      libraryDependencies ++= Seq(Dependencies.circeCore, Dependencies.circeDerivation),
+      libraryDependencies ++= Seq(Dependencies.circeParser).map(_ % Test)
+    )
+    .dependsOn(core)
+
+lazy val circeMagnolia =
+  crossProject(JSPlatform, JVMPlatform)
+  .crossType(CrossType.Pure)
+  .in(file("modules/circeMagnolia"))
+    .settings(publishSettings)
+    .settings(
+      name := "derevo-circe-magnolia",
+      libraryDependencies ++= Seq(Dependencies.circeMagnolia),
+      libraryDependencies ++= Seq(Dependencies.circeParser).map(_ % Test)
+    )
+    .dependsOn(core)
+
 lazy val ciris =
   (project in file("modules/ciris"))
     .settings(publishSettings)
